@@ -5,4 +5,3 @@ import 'package:flutter_advanced_complete_project/doc_app.dart';
 void main() {
   runApp(DocApp(appRouter: AppRouter()));
 }
-
