@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_complete_project/core/helpers/app_regex.dart';
-import 'package:flutter_advanced_complete_project/features/login/logic/login_cubit.dart';
 import 'package:flutter_advanced_complete_project/features/login/ui/widgets/password_vailidation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
+import '../../../../core/helpers/app_regex.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/shared_widgets/app_text_form_field.dart';
+import '../../logic/login_cubit.dart';
+
 
 class EmailAndPassword extends StatefulWidget {
   const EmailAndPassword({super.key});
@@ -15,32 +17,32 @@ class EmailAndPassword extends StatefulWidget {
 }
 
 class _EmailAndPasswordState extends State<EmailAndPassword> {
-  bool isObscure = true;
+  bool isObscureText = true;
 
-  bool hasLowerCase = false;
-  bool hasUpperCase = false;
+  bool hasLowercase = false;
+  bool hasUppercase = false;
+  bool hasSpecialCharacters = false;
   bool hasNumber = false;
-  bool hasSpecialCharacter = false;
-  bool hasMinimumLength = false;
+  bool hasMinLength = false;
 
   late TextEditingController passwordController;
 
   @override
   void initState() {
-    passwordController = context.read<LoginCubit>().passwordController;
     super.initState();
-    setUpPasswordControllerListener();
+    passwordController = context.read<LoginCubit>().passwordController;
+    setupPasswordControllerListener();
   }
 
-  void setUpPasswordControllerListener() {
+  void setupPasswordControllerListener() {
     passwordController.addListener(() {
       setState(() {
-        hasLowerCase = AppRegex.hasLowerCase(passwordController.text);
-        hasUpperCase = AppRegex.hasUpperCase(passwordController.text);
-        hasNumber = AppRegex.hasNumber(passwordController.text);
-        hasSpecialCharacter =
+        hasLowercase = AppRegex.hasLowerCase(passwordController.text);
+        hasUppercase = AppRegex.hasUpperCase(passwordController.text);
+        hasSpecialCharacters =
             AppRegex.hasSpecialCharacter(passwordController.text);
-        hasMinimumLength = AppRegex.hasMinLength(passwordController.text);
+        hasNumber = AppRegex.hasNumber(passwordController.text);
+        hasMinLength = AppRegex.hasMinLength(passwordController.text);
       });
     });
   }
@@ -57,33 +59,39 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
               if (value == null ||
                   value.isEmpty ||
                   !AppRegex.isEmailValid(value)) {
-                return 'Please enter your email';
+                return 'Please enter a valid email';
               }
             },
             controller: context.read<LoginCubit>().emailController,
           ),
-          verticalSpace(8),
+          verticalSpace(18),
           AppTextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your password';
-              }
-            },
             controller: context.read<LoginCubit>().passwordController,
             hintText: 'Password',
-            isObscure: isObscure,
+            isObscure: isObscureText,
             suffixIcon: GestureDetector(
-                onTap: () => setState(() => isObscure = !isObscure),
-                child:
-                    Icon(isObscure ? Icons.visibility_off : Icons.visibility)),
+              onTap: () {
+                setState(() {
+                  isObscureText = !isObscureText;
+                });
+              },
+              child: Icon(
+                isObscureText ? Icons.visibility_off : Icons.visibility,
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a valid password';
+              }
+            },
           ),
           verticalSpace(24),
           PasswordValidation(
-            hasLowerCase: hasLowerCase,
-            hasUpperCase: hasUpperCase,
+            hasLowerCase: hasLowercase,
+            hasUpperCase: hasUppercase,
+            hasSpecialCharacter: hasSpecialCharacters,
             hasNumber: hasNumber,
-            hasSpecialCharacter: hasSpecialCharacter,
-            hasMinimumLength: hasMinimumLength,
+            hasMinimumLength: hasMinLength,
           ),
         ],
       ),

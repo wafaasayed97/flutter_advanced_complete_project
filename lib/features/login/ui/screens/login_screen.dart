@@ -5,10 +5,9 @@ import 'package:flutter_advanced_complete_project/core/theming/styles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../data/models/login_request_body.dart';
 import '../../logic/login_cubit.dart';
-import '../terms_and_condition_text.dart';
-import '../widgets/already_have_account_text.dart';
+import '../widgets/terms_and_condition_text.dart';
+import '../widgets/dont_have_account_text.dart';
 import '../widgets/email_and_password.dart';
 import '../widgets/login_bloc_listener.dart';
 
@@ -43,12 +42,12 @@ class LoginScreen extends StatelessWidget {
                         child: Text('forgot password?',style:TextStyles.font13BlueRegular ,),),
                     verticalSpace(40),
                     AppTextButton(textStyle: TextStyles.font16WhiteSemiBold, onPressed: (){
-                      validateAndThenLogin(context);
+                      validateThenDoLogin(context);
                     }, buttonText: 'Login'),
                     verticalSpace(16),
                     const TermsAndConditionsText(),
                     verticalSpace(60),
-                    const AlreadyHaveAnAccountText(),
+                    const DontHaveAnAccountText(),
                     const LoginBlocListener(),
                   ],
                 )
@@ -60,14 +59,9 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void validateAndThenLogin(BuildContext context) {
+  void validateThenDoLogin(BuildContext context) {
     if (context.read<LoginCubit>().formKey.currentState!.validate()) {
-      context.read<LoginCubit>().emitLoginStates(
-          LoginRequestBody(
-              email: context.read<LoginCubit>().emailController.text,
-              password: context.read<LoginCubit>().passwordController.text
-          )
-      );
+      context.read<LoginCubit>().emitLoginStates();
     }
   }
 }
