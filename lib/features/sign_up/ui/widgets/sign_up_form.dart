@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_complete_project/core/helpers/app_regex.dart';
-import 'package:flutter_advanced_complete_project/features/login/logic/login_cubit.dart';
 import 'package:flutter_advanced_complete_project/features/login/ui/widgets/password_vailidation.dart';
 import 'package:flutter_advanced_complete_project/features/sign_up/logic/sign_up_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,6 +57,7 @@ class _SignupFormState extends State<SignupForm> {
               if (value == null || value.isEmpty) {
                 return 'Please enter a valid name';
               }
+              return null;
             },
             controller: context.read<SignUpCubit>().nameController,
           ),
@@ -70,6 +70,7 @@ class _SignupFormState extends State<SignupForm> {
                   !AppRegex.isPhoneNumberValid(value)) {
                 return 'Please enter a valid phone number';
               }
+              return null;
             },
             controller: context.read<SignUpCubit>().phoneController,
           ),
@@ -82,6 +83,7 @@ class _SignupFormState extends State<SignupForm> {
                   !AppRegex.isEmailValid(value)) {
                 return 'Please enter a valid email';
               }
+              return null;
             },
             controller: context.read<SignUpCubit>().emailController,
           ),
@@ -104,6 +106,7 @@ class _SignupFormState extends State<SignupForm> {
               if (value == null || value.isEmpty) {
                 return 'Please enter a valid password';
               }
+              return null;
             },
           ),
           verticalSpace(18),
@@ -129,6 +132,7 @@ class _SignupFormState extends State<SignupForm> {
               if (value == null || value.isEmpty) {
                 return 'Please enter a valid password';
               }
+              return null;
             },
           ),
           verticalSpace(24),

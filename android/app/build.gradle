@@ -50,11 +50,15 @@ android {
         production {
             dimension "default"
             resValue "string", "app_name", "Docdoc Production"
+            // applicationId "com.example.flutter_advanced_complete_project"
+
         }
         development {
             dimension "default"
             applicationIdSuffix ".dev"
             resValue "string", "app_name", "Docdoc Development"
+            // applicationId "com.example.flutter_advanced_complete_project.dev"
+
         }
     }
 
