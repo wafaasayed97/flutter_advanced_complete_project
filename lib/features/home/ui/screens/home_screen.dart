@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_advanced_complete_project/features/home/ui/widgets/doctor_blue_container.dart';
+import 'package:flutter_advanced_complete_project/features/home/ui/widgets/doctor_list_view.dart';
+import 'package:flutter_advanced_complete_project/features/home/ui/widgets/doctor_speciality_list_view.dart';
+import 'package:flutter_advanced_complete_project/features/home/ui/widgets/doctor_speciality_see_all.dart';
 import 'package:flutter_advanced_complete_project/features/home/ui/widgets/home_top_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,17 +14,20 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Expanded(
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.fromLTRB(20, 16, 20, 28),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HomeTopBar(),
-                DoctorBlueContainer(),
-              ],
-            ),
+        child: Container(
+          width: double.infinity,
+          margin: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const HomeTopBar(),
+              const DoctorBlueContainer(),
+              verticalSpace(24),
+              const DoctorSpecialitySeeAll(),
+              verticalSpace(24),
+              const DoctorSpecialityListView(),
+              const DoctorListView(),
+            ],
           ),
         ),
       ),
